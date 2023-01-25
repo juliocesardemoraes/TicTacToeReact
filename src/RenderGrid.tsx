@@ -13,13 +13,14 @@ function RenderGrid({
   turn: number;
 }) {
   let [isTurn, setIsTurn] = useState(turn);
+  let [squarePosition, setSquarePosition] = useState(null);
   const teste = () => {
     socket.emit("next_turn_chosen", { turn: 0 });
   };
 
   useEffect(() => {
     socket.on("next_turn", (data) => {
-      console.log(data.squarePosition);
+      setSquarePosition(data.squarePosition);
       setIsTurn(data.turn);
     });
   }, [socket]);
@@ -37,6 +38,7 @@ function RenderGrid({
               isTurn={isTurn}
               setIsTurn={setIsTurn}
               idx={idx}
+              squarePosition={squarePosition}
             ></Square>
           );
         })}
